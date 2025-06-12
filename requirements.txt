@@ -4,5 +4,4 @@ Django 4.x
 
 WeasyPrint
 
-Note: On Windows, WeasyPrint requires GTK to be installed.
-You can download it from GTK for Windows.
+
