@@ -5,11 +5,12 @@
 ![Screenshot 2025-06-12 163616](https://github.com/user-attachments/assets/6e406e3a-314c-4a4a-a701-d83b0e531a46)
 
 Project Overview-->
-   🧾 Django Invoice Generator with PDF Download
-        This is a Django web application that helps users create and manage invoices for clients.          The app allows users to:
-            - Add client information (like name, email, phone, address).
-            - Create invoices and add multiple items per invoice.
-            - Automatically calculate the total amount.
-            - View the invoice details on a web page.
-            - Add filtering by clien
-            - Download the invoice as a professionally styled PDF.
+         🧾 Django Invoice Generator with PDF Download
+                    This is a Django web application that helps users create and manage invoices 
+                    for clients.The app allows users to:
+                              - Add client information (like name, email, phone, address).
+                              - Create invoices and add multiple items per invoice.
+                              - Automatically calculate the total amount.
+                              - View the invoice details on a web page.
+                              - Add filtering by clien
+                              - Download the invoice as a professionally styled PDF.
