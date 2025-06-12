@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/invoice_pdf.css' %}">
+</head>
+<body>
+<div class="invoice-container">
+
+    <div class="invoice-top-bar">
+        <p>INVOICE</p>
+        <img src="{{ logo_path }}" alt="Logo">
+    </div>
+
+    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path fill="#000000" d="M0,0 C480,80 960,0 1440,80 L1440,0 L0,0 Z"></path>
+    </svg>
+
+    <div class="invoice-content">
+
+        <div class="bill-header">
+            <div class="bill-to">
+                <h2>BILL TO:</h2>
+                <p><strong>Name:</strong> {{ invoice.client.name }}</p>
+                <p><strong>Email:</strong> {{ invoice.client.email }}</p>
+                <p><strong>Address:</strong> {{ invoice.client.address }}</p>
+            </div>
+            <div class="invoice-meta">
+                <p><strong>Invoice number:</strong> #{{ invoice.id }}</p>
+                <p><strong>Date:</strong> {{ today }}</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Items</h2>
+        <table class="item-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price }}</td>
+                    <td>₹{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total">
+            Grand Total: ₹{{ total }}
+        </div>
+
+        <div class="terms-note">
+            <h3>Terms & Conditions:</h3>
+            <p>{{ invoice.notes }}</p>
+        </div>
+
+        <div class="footer-message">
+            <h3>"We Design for people, not just for screens."</h3>
+            <p>"Thank you for visiting! We hope to see you again soon. 🤝"</p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

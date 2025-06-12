@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Invoice Generator{% endblock %}</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #111111;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            width: 100%;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav img {
+            height: 50px;
+        }
+
+        nav .nav-links a {
+            margin-left: 40px;
+            text-decoration: none;
+            color: #eae4e4;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .content-wrapper {
+            padding: 20px 40px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{% static 'images/Web Design.png' %}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'add_client' %}">Add Client</a>
+            <a href="{% url 'add_invoice' %}">Create Invoice</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

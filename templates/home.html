@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; 
+    text-align: center;
+  }
+
+  .typewriter h2 {
+    font-size: 48px;
+    font-weight: bold;
+    background: linear-gradient(90deg, rgb(215, 73, 144), black, rgb(218, 38, 218));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #fff;
+    animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+    width: 0;
+  }
+
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes blink-caret {
+    0%, 100% { border-color: transparent }
+    50% { border-color: white; }
+  }
+</style>
+
+<div class="centered-container">
+  <div class="typewriter">
+    <h2>" We Design for people, not just for screens."</h2>
+  </div>
+</div>
+{% endblock %}

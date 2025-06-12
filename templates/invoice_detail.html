@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Invoice #{{ invoice.id }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/invoice.css' %}">
+
+<div class="invoice-container">
+    
+    <div class="invoice-top-bar">
+        <p>INVOICE</p>
+        <img src="{% static 'images/Web Design.png' %}" alt="Logo">
+    </div>
+
+    <div class="invoice-content">
+        
+        <div class="bill-header">
+            <div class="bill-to">
+                <h2>BILL TO:</h2>
+                <p><strong>Name:</strong> {{ invoice.client.name }}</p>
+                <p><strong>Email:</strong> {{ invoice.client.email }}</p>
+                <p><strong>Address:</strong> {{ invoice.client.address }}</p>
+            </div>
+            <div class="invoice-meta">
+                <p><strong>Invoice number:</strong> #{{ invoice.id }}</p>
+                <p><strong>Date:</strong> {{ today }}</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Items</h2>
+        <table class="item-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price }}</td>
+                    <td>₹{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total">
+            Total: ₹{{ total }}
+        </div>
+
+
+        <div class="terms-note">
+            <h3>Terms & Conditions:</h3>
+            <p>{{ invoice.notes }}</p>
+        </div>
+
+
+        <a href="{% url 'invoice_detail_pdf' invoice.pk %}" class="pdf-button">📄 Download PDF</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Invoice{% endblock %}
+
+{% block content %}
+<style>
+  .invoice-container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #fdf0f7, #d7ecff);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .invoice-container h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #4b0082;
+  }
+
+  form p label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 80px 80px;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: end;
+  }
+
+  .form-row input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+
+  .form-row label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #333;
+  }
+
+  #add-item,
+  .delete-button,
+  button[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(to right, #aa00ff, #ff1493);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 600;
+  }
+
+  .delete-button {
+    background: #e63946;
+  }
+
+  .delete-button:hover {
+    background: #c92a35;
+  }
+
+  #add-item:hover,
+  button[type="submit"]:hover {
+    background: linear-gradient(to right, #ff1493, #aa00ff);
+  }
+
+  #formset-container {
+    margin-top: 20px;
+  }
+</style>
+
+<div class="invoice-container">
+  <h2>Create Invoice</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ invoice_form.as_p }}
+
+    <div id="formset-container">
+      {{ formset.management_form }}
+      {% for form in formset %}
+        <div class="form-row">
+          <div>
+            <label for="{{ form.description.id_for_label }}">Description</label>
+            {{ form.description }}
+          </div>
+          <div>
+            <label for="{{ form.quantity.id_for_label }}">Quantity</label>
+            {{ form.quantity }}
+          </div>
+          <div>
+            <label for="{{ form.price.id_for_label }}">Price</label>
+            {{ form.price }}
+          </div>
+          <div>
+            {{ form.DELETE }}
+          </div>
+          <div>
+            <button type="button" class="delete-button">Delete</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <br>
+    <button type="button" id="add-item">+ Add More</button>
+    <br><br>
+    <button type="submit">Save Invoice</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const formContainer = document.getElementById("formset-container");
+    const addButton = document.getElementById("add-item");
+    const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+
+    addButton.addEventListener("click", function () {
+      let formCount = parseInt(totalForms.value);
+      let original = formContainer.querySelector(".form-row");
+      let newForm = original.cloneNode(true);
+
+      newForm.querySelectorAll("input").forEach(function (input) {
+        if (input.name) {
+          input.name = input.name.replace(/form-(\d)+/, `form-${formCount}`);
+          input.id = input.id.replace(/form-(\d)+/, `form-${formCount}`);
+          if (input.type !== "hidden" && input.type !== "checkbox") input.value = "";
+          if (input.type === "checkbox") input.checked = false;
+        }
+      });
+
+      formContainer.appendChild(newForm);
+      totalForms.value = formCount + 1;
+    });
+
+    formContainer.addEventListener("click", function (e) {
+      if (e.target.classList.contains("delete-button")) {
+        const row = e.target.closest(".form-row");
+        const deleteCheckbox = row.querySelector("input[type='checkbox'][name$='-DELETE']");
+        if (deleteCheckbox) deleteCheckbox.checked = true;
+        row.style.display = "none";
+      }
+    });
+  });
+</script>
+{% endblock %}
